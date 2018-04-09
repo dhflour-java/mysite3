@@ -8,9 +8,14 @@
 <link href="${pageContext.servletContext.contextPath }/assets/css/guestbook.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script type="text/javascript" src="${pageContext.servletContext.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath }/assets/js/ejs.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 var isEnd = false;
+
+ejsLi = new EJS( {
+	url: "/mysite3/assets/js/template/item.ejs?v=1.0"
+});
 
 var fetchList = function(){
 	if( isEnd == true ) {
@@ -38,7 +43,8 @@ var fetchList = function(){
 }
 
 var render = function(mode, data){
-	var html = 
+	var html = ejsLi.render(data);
+/*	
 		"<li data-no='" + data.no + "'><table><tr>" +
 		"<td>" + data.name + "</td>" +
 		"<td>" + data.regDate + "</td>" +
@@ -46,6 +52,7 @@ var render = function(mode, data){
 		"</tr><tr>" +
 		"<td colspan=3>" + data.contents + "</td>" +
 		"</tr></table><br></li>";
+*/	
 	if( mode == true ) {
 		$("#list").prepend( html );
 	} else {

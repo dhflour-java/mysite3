@@ -1,6 +1,7 @@
 (function() {
     var db = {
         loadData: function(filter) {
+        	/*
             return $.grep(this.clients, function(client) {
                 return (!filter.Name || client.Name.indexOf(filter.Name) > -1)
                     && (filter.Age === undefined || client.Age === filter.Age)
@@ -8,6 +9,28 @@
                     && (!filter.Country || client.Country === filter.Country)
                     && (filter.Married === undefined || client.Married === filter.Married);
             });
+            */
+        	
+        	// 서버에서 AJAX로 데이터를 가져와서
+        	// 배열 this.clients 에 추가
+
+        	
+        	$.ajax({
+        		url: "/mysite3/grid/api/list",
+        		type: "get",
+        		dataType: "json",
+        		async: false,
+        		data: "",
+        		success: function( response ) {
+        			$.each(response, function(index, vo){
+        				db.clients.push( vo );        				
+        			});
+        		}
+        	});
+        	
+        	console.log( db.clients );
+        	
+        	return db.clients;
         },
         insertItem: function(insertingClient) {
             this.clients.push(insertingClient);
@@ -33,6 +56,9 @@
         { Name: "Russia", Id: 7 }
     ];
 
+    db.clients = [];
+    
+    /*
     db.clients = [ {
             "Name": "Otto Clay",
             "Age": 61,
@@ -827,5 +853,5 @@
             "RegisterDate": "2013-09-04T01:44:47-07:00"
         }
      ];
-
+	*/
 }());

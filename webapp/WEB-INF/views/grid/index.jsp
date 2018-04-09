@@ -28,18 +28,17 @@
 $(function() {
 
 	$("#jsGrid").jsGrid({
-		
                 height: "70%",
                 width: "100%",
-                filtering: true,
+                //filtering: true,
                 editing: true,
                 inserting: true,
-                sorting: true,
-                paging: true,
+                //sorting: true,
+                //paging: true,
                 autoload: true,
-                pageSize: 15,
-                pageButtonCount: 5,
-                deleteConfirm: "Do you really want to delete the client?",
+                //pageSize: 15,
+                //pageButtonCount: 5,
+                deleteConfirm: "삭제 하시겠습니까?",
                 controller: db,
                 fields: [
                     { name: "Name", type: "text", width: 150 },
