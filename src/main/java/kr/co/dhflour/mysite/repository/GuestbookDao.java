@@ -13,6 +13,11 @@ public class GuestbookDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	public GuestbookVo get( Long no ) {
+		GuestbookVo vo = sqlSession.selectOne( "guestbook.getByNo", no );
+		return vo;
+	}
+	
 	public boolean delete( GuestbookVo vo ) {
 		int count = sqlSession.delete( "guestbook.delete", vo );
 		return (count == 1);

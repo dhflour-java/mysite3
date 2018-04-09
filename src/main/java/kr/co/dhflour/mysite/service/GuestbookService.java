@@ -13,6 +13,11 @@ public class GuestbookService {
 	@Autowired
 	private GuestbookDao guestbookDao;
 	
+	public List<GuestbookVo> getAjaxMessageList(Long no){
+		List<GuestbookVo> list = guestbookDao.fetchList2(no);
+		return list;
+	}
+	
 	public List<GuestbookVo> getMessageList() {
 		return guestbookDao.fetchList();
 	}
@@ -20,8 +25,14 @@ public class GuestbookService {
 	public void insertMessage(GuestbookVo vo) {
 		guestbookDao.insert(vo);
 	}
+
+	public GuestbookVo insertMessage2(GuestbookVo vo) {
+		guestbookDao.insert(vo);
+		GuestbookVo guestbookVo = guestbookDao.get( vo.getNo() );
+		return guestbookVo;
+	}
 	
-	public void deleteMessage(GuestbookVo vo) {
-		guestbookDao.delete(vo);
+	public boolean deleteMessage(GuestbookVo vo) {
+		return guestbookDao.delete(vo);
 	}	
 }

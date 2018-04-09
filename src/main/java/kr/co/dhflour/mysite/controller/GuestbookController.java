@@ -1,6 +1,8 @@
 package kr.co.dhflour.mysite.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.dhflour.mysite.service.GuestbookService;
@@ -49,4 +52,34 @@ public class GuestbookController {
 	public String ajax() {
 		return "guestbook/ajax";
 	}
+	
+	@ResponseBody
+	@RequestMapping( "/ajax/list" )
+	public List<GuestbookVo> ajaxList(
+		@RequestParam(value = "no", required=true, defaultValue="0") Long no) {
+		List<GuestbookVo> list = guestbookService.getAjaxMessageList( no );
+		return list;
+	}
+	
+	@ResponseBody
+	@RequestMapping( "/ajax/insert" )
+	public GuestbookVo ajaxInsert(@ModelAttribute GuestbookVo vo) {
+		GuestbookVo guestbookVo = guestbookService.insertMessage2(vo);
+		return guestbookVo;
+	}
+	
+	@ResponseBody
+	@RequestMapping( value="/ajax/delete", method=RequestMethod.POST )
+	public Map<String, Object> ajaxDelete(@ModelAttribute GuestbookVo vo) {
+		
+		boolean result = guestbookService.deleteMessage(vo);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put( "result", result );
+		map.put( "no", vo.getNo() );
+		
+		return map;
+	}	
+	
+	
 }
